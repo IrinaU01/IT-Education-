@@ -124,5 +124,65 @@ int main() {
 /*Завдання 3. Написати функцію, яка вставляє в рядок у
 зазначену позицію заданий символ.*/
 
+void insert_char(char*& arr, size_t& n, size_t ind, char char_to_insert)
+{
+    if (ind > n) {
+        cout << "Error"<< endl;
+        return;
+    }
+    size_t new_size = n + 1;
+    char* new_arr = new char[new_size + 1];
+    for (size_t i = 0; i < ind; ++i)
+    {
+        new_arr[i] = arr[i];
+    }
+
+    new_arr[ind] = char_to_insert;
+    for (size_t i = ind; i < n; ++i)
+    {
+        new_arr[i + 1] = arr[i];
+    }
+
+    new_arr[new_size] = '\0';
+    delete[] arr;
+    arr = new_arr;
+    n = new_size;
+}
+#include <iostream>
+#include <stdlib.h>
+#include <ctime>
+using namespace std;
+#include "Header.h"
+#include <algorithm>
+
+int main()
+{
+    const char* temp_str = "A,B,C,D,E";
+    size_t N = strlen(temp_str);
+    char* char_arr = new char[N + 1];
+    for (size_t i = 0; i <= N; ++i)
+    {
+        char_arr[i] = temp_str[i];
+    }
+    cout <<char_arr<< endl;
+    int temp_index;
+    cout << "Enter index";
+    cin >> temp_index;
+
+    char char_to_insert;
+    cout << "Enter symbol";
+    cin >> char_to_insert;
+
+    size_t index_to_insert = (temp_index < 0) ? N + 1 : (size_t)temp_index;
+    insert_char(char_arr, N, index_to_insert, char_to_insert);
+    cout << char_arr << endl;
+
+    if (char_arr != nullptr) {
+        delete[] char_arr;
+        char_arr = nullptr;
+    }
+    return 0;
+}
+
 /*Завдання 4. Зробити динамічний двовимірний масив, та функцію, яка виводить його
 у консоль та функцію яка знаходить мінімум та максимум в цьому масиві*/
