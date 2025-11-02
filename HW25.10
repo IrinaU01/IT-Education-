@@ -1,4 +1,5 @@
 /*Завдання 1. Написати функцію, яка видаляє з рядка символ із заданим номером.*/
+
 void print_array(const int* arr, int n)
 {
     for (int i = 0; i < n; i++)
@@ -57,6 +58,7 @@ int main()
 
 /*Завдання 2. Написати функцію, яка видаляє з рядка всі
 входження в нього заданого символу.*/
+
 void static remove_char(char*& arr, int& n, char char_to_remove)
 {
     int new_size = 0;
@@ -142,12 +144,12 @@ void insert_char(char*& arr, size_t& n, size_t ind, char char_to_insert)
     {
         new_arr[i + 1] = arr[i];
     }
-
     new_arr[new_size] = '\0';
     delete[] arr;
     arr = new_arr;
     n = new_size;
 }
+
 #include <iostream>
 #include <stdlib.h>
 #include <ctime>
@@ -157,7 +159,7 @@ using namespace std;
 
 int main()
 {
-    const char* temp_str = "A,B,C,D,E";
+    const char* temp_str = "Hello people";
     size_t N = strlen(temp_str);
     char* char_arr = new char[N + 1];
     for (size_t i = 0; i <= N; ++i)
@@ -186,3 +188,76 @@ int main()
 
 /*Завдання 4. Зробити динамічний двовимірний масив, та функцію, яка виводить його
 у консоль та функцію яка знаходить мінімум та максимум в цьому масиві*/
+
+
+void MaxMin(int** const arr, int rows, int cols, int& max, int& min)
+{
+    max = arr[0][0];
+    min = arr[0][0];
+
+    for (int i = 0; i < rows; ++i)
+    {
+        for (int j = 0; j < cols; ++j)
+        {
+            if (arr[i][j] > max)
+            {
+                max = arr[i][j];
+            }
+            if (arr[i][j] < min) 
+            {
+                min= arr[i][j];
+            }
+        }
+    }
+}
+
+#include <iostream>
+#include <stdlib.h>
+#include <ctime>
+using namespace std;
+#include "Header.h"
+
+
+
+
+int main()
+
+{
+    typedef unsigned int uint;
+    uint rows, cols;
+    cout << "Enter number of rows: ";
+    cin >> rows;
+    cout << "Enter number of columns: ";
+    cin >> cols;
+    int** arr = new int* [rows];
+    for (uint i = 0; i < rows; i++)
+    {
+        arr[i] = new int[cols];
+    }
+    srand((unsigned int)time(NULL));
+    int minD = -10, maxD = 45;
+
+    cout << "\nArray:" << endl;
+    for (uint i = 0; i < rows; i++)
+    {
+        for (uint j = 0; j < cols; j++)
+        {
+            arr[i][j] = rand() % (maxD - minD) + minD;
+            cout << arr[i][j] << " ";
+        }
+        cout << endl;
+    }
+    int max_result;
+    int min_result;
+    MaxMin(arr, rows, cols, max_result, min_result);
+    cout << "Max number: " << max_result << endl;
+    cout << "Min number: " << min_result << endl;
+    for (uint i = 0; i < rows; i++)
+    {
+        delete[] arr[i];
+    }
+
+    delete[] arr;
+
+    return 0;
+}
