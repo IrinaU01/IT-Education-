@@ -74,31 +74,31 @@ void sortingByColour(Car* cars, unsigned int n)
     }
 }
 
-void searchByColour(const Car* cars, int n, const char* search_colour)
+void searchByColour(const Car* cars, int n)
 {
+    string searchColour;
     bool found = false;
-    cout << "\n--- Search results for colour: " << search_colour << " ---\n";
+    cout << "Enter the colour of the car: ";
+    cin >> searchColour;
 
     for (int i = 0; i < n; i++)
     {
-        if (strcmp(cars[i].colour, search_colour) == 0)
+        if (cars[i].colour == searchColour)
         {
             cout << "\nFound Car:\n";
             printValue(cars[i]);
             found = true;
         }
     }
-
     if (!found)
     {
-        cout << "We didn't find a car with the colour: " << search_colour << "\n";
+        cout << "We didn't find a car with the colour: " << searchColour << "\n";
     }
     cout << "\n";
 }
 
 #include <iostream>
-#include <stdlib.h>
-#include <ctime>
+#include <cstring>
 using namespace std;
 #include "Header.h"
 
@@ -122,22 +122,13 @@ int main()
     {
         printValue(cars[i]);
     }
-    
-    cout << "\n After Sorting by Colour \n" << endl;
+  
     sortingByColour (cars, n);
     cout << endl;
-
-    char search_colour[N];
-
-    cout << "Enter the colour for search: ";
-    cin.getline(search_colour, N);
-
-    searchByColour(cars, n, search_colour);
-    searchByColour(cars, n, search_colour);
-
+    
+    searchByColour(cars, n);
     for (int i = 0; i < n; i++)
     {
-        printValue(cars[i]);
         cout << endl;
     }
 
