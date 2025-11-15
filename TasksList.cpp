@@ -20,103 +20,102 @@
 за пріоритетом;
 за датою та часом виконання.
 */
-#include <iostream>
-#include <string>     // Required for std::string
-#include <cstring>    // Required for strcmp
-#include <algorithm>  // Required for std::swap
-#include <limits>     // Required for cin.ignore and numeric_limits
-
-using namespace std;
-const int N = 32; 
+#pragma once
+const int N = 32;
 
 struct Tm {
-    int tm_min; 
-    int tm_hour; 
-    int tm_mday;
-    int tm_mon; 
-    int tm_year;
-    int tm_sec; 
+    int tm_min=0;
+    int tm_hour=0;
+    int tm_mday=0;
+    int tm_mon=0; 
+    int tm_year=0;
+    int tm_sec=0;
 };
 
-struct Task {
-    char name[N];
-    string priority;
-    string description;
-    Tm fulfillment_time_date; 
+struct Task
+{
+    char name[N]{};
+    string priority{};
+    string description{};
+    Tm fulfillment_time_date;
 };
 
 void printValue(const Task& task);
 
 void fillTm(Tm& time_date)
-{  
+{
     cout << "  Enter year (e.g., 2025): ";
     cin >> time_date.tm_year;
     cout << "  Enter month (1-12): ";
     cin >> time_date.tm_mon;
     cout << "  Enter Day of month (1-31): ";
     cin >> time_date.tm_mday;
-    
+
     cout << "  Enter hours (0-23): ";
     cin >> time_date.tm_hour;
     cout << "  Enter minutes (0-59): ";
     cin >> time_date.tm_min;
-    time_date.tm_sec = 0; 
+    time_date.tm_sec = 0;
 }
 
 void fillValue(Task& task)
 {
-    cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
     cout << "Enter task name: ";
-    cin.getline(task.name, N); 
-    
+    cin.getline(task.name, N);
+
     cout << "Enter priority (e.g., high or low): ";
-    cin >> task.priority; 
-    
+    cin >> task.priority;
+
     cout << "Enter task description: ";
     cin >> task.description;
-
-    cout << " Enter Fulfillment Date/Time \n";
+    cout << "--- Enter Fulfillment Date/Time ---\n";
     fillTm(task.fulfillment_time_date);
 }
 
-void printValue(const Task& task) 
+void printValue(const Task& task)
 {
     const Tm& time_date = task.fulfillment_time_date;
-    
-    cout << "\n---------\n";
+
+    cout << "\n----------------------------------\n";
     cout << "Task name: " << task.name << "\n";
     cout << "Priority: " << task.priority << "\n";
     cout << "Description: " << task.description << "\n";
-    
-    cout << "Fulfillment Date: " 
-         << time_date.tm_year
-         << "-" 
-         << time_date.tm_mon
-         << "-" 
-         << time_date.tm_mday 
-         << "\n";
 
-    cout << "Fulfillment Time: " 
-         << time_date.tm_hour 
-         << ":" 
-         << time_date.tm_min 
-         << ":" 
-         << time_date.tm_sec 
-         << "\n";
+    cout << "Fulfillment Date: "
+        << time_date.tm_year
+        << "-"
+        << time_date.tm_mon
+        << "-"
+        << time_date.tm_mday
+        << "\n";
+
+    cout << "Fulfillment Time: "
+        << time_date.tm_hour
+        << ":"
+        << time_date.tm_min
+        << ":"
+        << time_date.tm_sec
+        << "\n";
     cout << "----------------------------------\n";
 }
+
 
 void addTask(Task*& tasks, int& n)
 {
     Task newTask;
-    cout << "\n Adding a New Task \n";
+    cout << "\n--- Adding a New Task ---\n";
     fillValue(newTask);
+
     Task* newTasks = new Task[n + 1];
+
     for (int i = 0; i < n; ++i) {
         newTasks[i] = tasks[i];
     }
 
     newTasks[n] = newTask;
+
     delete[] tasks;
     tasks = newTasks;
     n++;
@@ -134,7 +133,7 @@ void editTask(Task* tasks, int n)
     string nameToEdit;
     cout << "\n--- Editing a Task ---\n";
     cout << "Enter the NAME of the task to edit: ";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     getline(cin, nameToEdit);
 
     int editIndex = -1;
@@ -149,7 +148,7 @@ void editTask(Task* tasks, int n)
         cout << "Task with name \"" << nameToEdit << "\" not found.\n";
         return;
     }
-    
+
     cout << "\nFound Task: " << tasks[editIndex].name << ". Please enter new values:\n";
     fillValue(tasks[editIndex]);
 
@@ -183,17 +182,16 @@ void deleteTask(Task*& tasks, int& n)
     }
 
     Task* newTasks = new Task[n - 1];
-
     int newIndex = 0;
     for (int i = 0; i < n; ++i) {
         if (i != deleteIndex) {
             newTasks[newIndex++] = tasks[i];
         }
     }
+
     delete[] tasks;
     tasks = newTasks;
     n--;
-
     cout << "Task \"" << nameToDelete << "\" deleted successfully. Total tasks: " << n << endl;
 }
 
@@ -211,7 +209,6 @@ void searchByName(const Task* tasks, int n)
     string searchName;
     cout << "\n--- Search By Name ---\n";
     cout << "Enter the task name: ";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     getline(cin, searchName);
 
     int index = findTaskIndexByName(tasks, n, searchName);
@@ -219,7 +216,8 @@ void searchByName(const Task* tasks, int n)
     if (index != -1) {
         cout << "\nFound Task:\n";
         printValue(tasks[index]);
-    } else {
+    }
+    else {
         cout << "We didn't find a task with the name: " << searchName << "\n";
     }
 }
@@ -233,7 +231,7 @@ void searchByPriority(const Task* tasks, int n)
     cin >> searchPriority;
 
     for (int i = 0; i < n; i++) {
-        if (tasks[i].priority == searchPriority) { 
+        if (tasks[i].priority == searchPriority) {
             cout << "\nFound Tasks by priority:\n";
             printValue(tasks[i]);
             found = true;
@@ -264,23 +262,38 @@ void searchByDescription(const Task* tasks, int n)
     }
 }
 
-int main () {
-    
+#include <iostream>
+#include <string> 
+#include <cstring> 
+#include <algorithm> 
+#include <limits>  
+
+using namespace std;
+#include "Header.h"
+
+
+int main() 
+{
+
     int n = 0;
     Task* tasks = new Task[0];
+
     cout << "Welcome to the Task Manager!\n";
     int initial_n;
     cout << "Enter the initial number of tasks (0 to start empty): ";
-    if (!(cin >> initial_n) || initial_n < 0) {
+    if (!(cin >> initial_n) || initial_n < 0) 
+    {
         initial_n = 0;
     }
-    
-    if (initial_n > 0) {
+
+    if (initial_n > 0) 
+    {
         for (int i = 0; i < initial_n; i++) {
             cout << "\n --- Initial Task " << i + 1 << " Setup ---\n";
             addTask(tasks, n);
         }
     }
+
 
     int choice;
     do {
@@ -295,57 +308,56 @@ int main () {
         if (!(cin >> choice)) {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            choice = -1;
+            choice = -1; // Force invalid choice
         }
 
         switch (choice) {
-            case 1:
-                cout << "\n --- Current Tasks List ---\n";
-                if (n == 0) {
-                    cout << "List is empty.\n";
-                }
-                for (int i = 0; i < n; i++) {
-                    printValue(tasks[i]);
-                }
-                break;
-            case 2:
-                addTask(tasks, n);
-                break;
-            case 3:
-                editTask(tasks, n);
-                break;
-            case 4:
-                deleteTask(tasks, n);
-                break;
-            case 5:
-                cout << "\n  -- SEARCH SUBMENU --\n";
-                cout << "  a. Search by Name\n";
-                cout << "  b. Search by Priority\n";
-                cout << "  c. Search by Description\n";
-                cout << "  Enter search choice: ";
-                char search_choice;
-                cin >> search_choice;
-                
-                if (n == 0) {
-                    cout << "Task list is empty.\n";
-                    break;
-                }
+        case 1:
+            cout << "\n --- Current Tasks List ---\n";
+            if (n == 0) {
+                cout << "List is empty.\n";
+            }
+            for (int i = 0; i < n; i++) {
+                printValue(tasks[i]);
+            }
+            break;
+        case 2:
+            addTask(tasks, n);
+            break;
+        case 3:
+            editTask(tasks, n);
+            break;
+        case 4:
+            deleteTask(tasks, n);
+            break;
+        case 5:
+            cout << "\n  -- SEARCH SUBMENU --\n";
+            cout << "  a. Search by Name\n";
+            cout << "  b. Search by Priority\n";
+            cout << "  c. Search by Description\n";
+            cout << "  Enter search choice: ";
+            char search_choice;
+            cin >> search_choice;
 
-                switch (tolower(search_choice)) {
-                    case 'a': searchByName(tasks, n); break;
-                    case 'b': searchByPriority(tasks, n); break;
-                    case 'c': searchByDescription(tasks, n); break;
-                    default: cout << "Invalid search choice.\n";
-                }
+            if (n == 0) {
+                cout << "Task list is empty.\n";
                 break;
-            case 0:
-                cout << "Exiting Task Manager. Goodbye!\n";
-                break;
-            default:
-                cout << "Invalid choice. Please try again.\n";
+            }
+
+            switch (tolower(search_choice)) {
+            case 'a': searchByName(tasks, n); break;
+            case 'b': searchByPriority(tasks, n); break;
+            case 'c': searchByDescription(tasks, n); break;
+            default: cout << "Invalid search choice.\n";
+            }
+            break;
+        case 0:
+            cout << "Exiting Task Manager. Goodbye!\n";
+            break;
+        default:
+            cout << "Invalid choice. Please try again.\n";
         }
     } while (choice != 0);
     delete[] tasks;
-
     return 0;
 }
