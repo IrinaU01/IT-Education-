@@ -21,7 +21,7 @@
 за датою та часом виконання.
 */
 const int N= 3;
-struct TasksList
+struct Task
 {
     char name[N];
     char priority;
@@ -35,7 +35,7 @@ struct Tm {
   int tm_year;  /* Years since 1900 */
 }
 
-void fillValue(TasksList& task)
+void fillValue(Task& task)
 {
     cin.ignore();
     cout << "Enter task name: ";
@@ -62,7 +62,7 @@ void fillTm(Tm& time_date)
     cout << "Enter year: ";
     cin >> time_date.tm_year;
 }
-void printValue(const TaskList& task, const Tm& time_date)
+void printValue(const Task& task, const Tm& time_date)
 {
     cout << "Task name: " << task.name << "\n";
     cout << "Priority: " << task.priority << "\n";
@@ -83,7 +83,7 @@ void printValue(const TaskList& task, const Tm& time_date)
          << time_date.tm_sec 
          << "\n";
 }
-void searchByName(const TasksList* tasks, int n)
+void searchByName(const Task* tasks, int n)
 {
     string searchName;
     bool found = false;
@@ -105,7 +105,7 @@ void searchByName(const TasksList* tasks, int n)
     }
     cout << "\n";
 }
-void searchByPriority(const TasksList* tasks, int n)
+void searchByPriority(const Task* tasks, int n)
 {
     string searchPriority;
     bool found = false;
@@ -128,7 +128,7 @@ void searchByPriority(const TasksList* tasks, int n)
     cout << "\n";
 }
 
-void searchByDescription(const TasksList* tasks, int n)
+void searchByDescription(const Task* tasks, int n)
 {
     string searchDescription;
     bool found = false;
@@ -151,7 +151,7 @@ void searchByDescription(const TasksList* tasks, int n)
     cout << "\n";
 }
 
-void sortingByPriority(TasksList* task, unsigned int n)
+void sortingByPriority(Task* task, unsigned int n)
 {
   for (size_t i = 0; i < n - 1; i++)
   {
@@ -166,7 +166,7 @@ void sortingByPriority(TasksList* task, unsigned int n)
   }
 }
 
-void sortingByDateAsc(TasksList* task, unsigned int n)
+void sortingByDateAsc(Task* task, unsigned int n)
 {
   for(size_t i = 0; i < n - 1; i++)
   {
@@ -182,7 +182,7 @@ void sortingByDateAsc(TasksList* task, unsigned int n)
   }
 }
 
-void sortingByTimeAsc(TasksList* task, unsigned int n)
+void sortingByTimeAsc(Task* task, unsigned int n)
 {
   for(size_t i = 0; i < n - 1; i++)
   {
@@ -197,15 +197,47 @@ void sortingByTimeAsc(TasksList* task, unsigned int n)
     }
   }
 }
-int AddTask (int N, 
 
 #include <iostream>
 #include <ctime>  // Import the ctime library
 using namespace std;
  
 int main () {
-  struct tm datetime;
-  time_t timestamp;
+char task;
+int time_date;
+int n;
+Task* task = new Task[n];
+    for (int i = 0; i < n; i++)
+    {
+        cout << "\n Enter task " << i + 1 << "\n";
+        fillValue(task[i]);
+    }
+    cout << "\n Initial Tasks List \n";
+    for (int i = 0; i < n; i++)
+    {
+        printValue(tasks[i]);
+    }
+  
+    sortingByName (tasks, n);
+    cout << endl;
+    sortingByPriority(tasks, n);
+    cout << endl;
+    sortingByTimeAsc(tasks, n);
+    cout << endl;
+    sortingByDateAsc(tasks, n);
+    cout << endl;
+    searchByDescription(tasks, n);
+    searchByName(tasks, n);
+    searchByPriority(tasks, priority);
+    for (int i = 0; i < n; i++)
+    {
+        cout << endl;
+    }
+
+    delete[] tasks;
+
+    return 0;
+}
 
   return 0;
 }
