@@ -151,3 +151,19 @@ void sortingByDateAsc(TasksList* task, unsigned int n)
     }
   }
 }
+
+void sortingByTimeAsc(TasksList* task, unsigned int n)
+{
+  for(size_t i = 0; i < n - 1; i++)
+  {
+    for (size_t j = 0; j < n - 1 - i; j++)
+    {
+      if (task[j].fulfillment_time > user[j + 1].fulfillment_time)
+      {
+        Task temp = task[j];
+        task[j] = task[j + 1];
+        task[j + 1] = task;
+      }
+    }
+  }
+}
