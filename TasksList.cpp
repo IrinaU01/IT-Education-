@@ -20,7 +20,7 @@
 за пріоритетом;
 за датою та часом виконання.
 */
-const int N= 3;
+const int N = 32;
 struct Task
 {
     char name[N];
@@ -199,7 +199,10 @@ void sortingByTimeAsc(Task* task, unsigned int n)
 }
 
 #include <iostream>
-#include <ctime>  // Import the ctime library
+#include <string>
+#include <cstring>
+#include <algorithm> 
+#include <ctime>
 using namespace std;
  
 int main () {
