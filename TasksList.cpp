@@ -20,19 +20,21 @@
 за пріоритетом;
 за датою та часом виконання.
 */
-const int N= 5;
+const int N= 3;
 struct TasksList
 {
     char name[N];
     char priority;
     char description;
-    date fulfillment_date;
-    time fulfillment_time;
-};
-struct tm DateTime
-{
-
 }
+struct Tm {
+  int tm_min;   /* Minutes: 0-59 */
+  int tm_hour;  /* Hours:   0-23 */
+  int tm_mday;  /* Day of month: 1-31 */
+  int tm_mon;   /* Month: 0-11 */
+  int tm_year;  /* Years since 1900 */
+}
+
 void fillValue(TasksList& task)
 {
     cin.ignore();
@@ -47,16 +49,40 @@ void fillValue(TasksList& task)
     cout << "Enter fulfillment time: ";
     cin >> task.fulfillment_time;
 }
-
-void printValue(const TaskList& task)
+void fillTm(Tm& time_date)
+{ 
+    cout << "Enter hours: ";
+    cin >> time_date.tm_hour;
+    cout << "Enter minutes: ";
+    cin >> time_date.tm_min;
+    cout << "Enter Day of month: ";
+    cin >> time_date.tm_mday;
+    cout << "Enter month: ";
+    cin >> time_date.tm_mon;
+    cout << "Enter year: ";
+    cin >> time_date.tm_year;
+}
+void printValue(const TaskList& task, const Tm& time_date)
 {
     cout << "Task name: " << task.name << "\n";
     cout << "Priority: " << task.priority << "\n";
     cout << "Description: " << task.description << "\n";
-    cout << "Fulfillment Date: " << task.fulfillment_date << "\n";
-    cout << "Fulfillment Time: " << task.fulfillment_time << "\n";
-}
+    cout << "Fulfillment Date: " 
+         << time_date.tm_year
+         << "-" 
+         << time_date.tm_mon
+         << "-" 
+         << time_date.tm_mday 
+         << "\n";
 
+    cout << "Fulfillment Time: " 
+         << time_date.tm_hour 
+         << ":" 
+         << time_date.tm_min 
+         << ":" 
+         << time_date.tm_sec 
+         << "\n";
+}
 void searchByName(const TasksList* tasks, int n)
 {
     string searchName;
