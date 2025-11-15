@@ -29,6 +29,10 @@ struct TasksList
     date fulfillment_date;
     time fulfillment_time;
 };
+struct tm DateTime
+{
+
+}
 void fillValue(TasksList& task)
 {
     cin.ignore();
@@ -167,3 +171,16 @@ void sortingByTimeAsc(TasksList* task, unsigned int n)
     }
   }
 }
+int AddTask (int N, 
+
+#include <iostream>
+#include <ctime>  // Import the ctime library
+using namespace std;
+ 
+int main () {
+  struct tm datetime;
+  time_t timestamp;
+
+  return 0;
+}
+
