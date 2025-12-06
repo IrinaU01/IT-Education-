@@ -88,5 +88,6 @@ int main()
 	arr1.setSize(2);
 	MyArray arr2 = arr1;
 	arr2.print();
-	arr1.setSize(10); /* нічого не буде, бо сетер нічого не повертає*/
+	arr1.setSize(10);
+	arr1.print();
 }
